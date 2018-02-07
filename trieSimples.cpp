@@ -1,7 +1,7 @@
 /*
  * Matheus Oliveira
  * 08/01/2018
- * trie2.cpp
+ * trieSimples.cpp
 */
 
 #include <bits/stdc++.h>
@@ -48,7 +48,7 @@ bool wordInTrie(TrieNode& actual, string word, int index) {
 }
 
 int main() {
-	inicialize(root);
+	inicialize(root);	
 
 	int n;
 	char op;

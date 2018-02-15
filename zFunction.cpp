@@ -10,6 +10,7 @@ using namespace std;
 #define MAXN 2000010
 int z[MAXN];
 
+// z[i] armazena o tamanho da maior substring que se inicia em word[i] e que também é prefixo da string word
 void calculateZ(const string &word) {
 	int l = 0, r = 0, tam = ((int) word.size());
 	z[0] = 0;

@@ -11,6 +11,7 @@ using namespace std;
 #define MAXN 3000000
 int prefixVal[MAXN];
 
+// prefixVal[i] armazena o valor do maior prefixo, até o index i, que também é sufixo da string word
 void buildPrefixFunction(const string &word) {
 	prefixVal[0] = prefixVal[1] = 0;
 	int j;

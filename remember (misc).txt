@@ -1,0 +1,9 @@
+compilador:
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+
+input/output:
+ios::sync_with_stdio(false);
+cin.tie(null); -> possível usar apenas em problemas não interativos
+
+Pi value (29 decimal digits precision): 3.14159265358979323846264338327

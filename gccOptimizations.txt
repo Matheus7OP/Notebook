@@ -1,7 +1,0 @@
-compilador:
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
-
-input/output:
-ios::sync_with_stdio(false);
-cin.tie(null) -> possível usar em problemas não interativos

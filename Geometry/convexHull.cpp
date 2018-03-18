@@ -41,7 +41,7 @@ struct GVector {
 		return ( (this->x * v.y) - (this->y * v.x) );
 	}
 
-} pivot, pontos[MAXN], pontosRestantes[MAXN], ch[MAXN];
+} pivot, pontos[MAXN], ch[MAXN];
 
 int squareDist(GVector f, GVector s) {
 	return ( (f.x - s.x)*(f.x - s.x) ) + ( (f.y - s.y)*(f.y - s.y) );
@@ -78,7 +78,7 @@ GVector last(stack<GVector> &st) {
 
 void findConvexHull(int n) {
 	stack<GVector> convexHull;
-	int indiceMenor = 0, qtdPontos = n, p;
+	int indiceMenor = 0, qtdPontos = n;
 
 	for(int i = 1; i < qtdPontos; i++) {
 		if( pontos[i] < pontos[indiceMenor] ) indiceMenor = i;
@@ -86,16 +86,13 @@ void findConvexHull(int n) {
 
 	pivot = pontos[indiceMenor];
 	sort(pontos, pontos + qtdPontos, compare);
-
 	for(int i = 0; i < 3; i++) convexHull.push( pontos[i] );
 
-	p = 0;
 	for(int i = 3; i < qtdPontos; i++) {
 		GVector base = last(convexHull) - nextToLast(convexHull),
 		novo = pontos[i] - last(convexHull);
 
 		while( base.crossProduct(novo) < 0 and ((int) convexHull.size()) > 2 ) {
-			pontosRestantes[p++] = convexHull.top();
 			convexHull.pop();
 
 			base = last(convexHull) - nextToLast(convexHull),

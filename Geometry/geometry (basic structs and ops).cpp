@@ -4,16 +4,25 @@
  * geometry (basic structures and ops).cpp
 */
 
-struct MVector {
+struct Point {
 	int x, y;
 
-	MVector( int _x = 0, int _y = 0 ) {
+	Point(int _x, int _y) {
+		this->x = _x;
+		this->y = _y;
+	}
+};
+
+struct GVector {
+	int x, y;
+
+	GVector(int _x, int _y) {
 		this->x = _x;
 		this->y = _y;
 	}
 
-	MVector operator+ (MVector p) {
-		MVector result;
+	GVector operator+ (GVector p) {
+		GVector result;
 
 		result.x = this->x + p.x;
 		result.y = this->y + p.y;
@@ -21,8 +30,8 @@ struct MVector {
 		return result;
 	}
 
-	MVector operator*(int m) const {
-		MVector result;
+	GVector operator*(int m) const {
+		GVector result;
 
 		result.x = x*m;
 		result.y = y*m;
@@ -31,12 +40,12 @@ struct MVector {
 	}
 
 	// senO * |a| * |b|
-	int crossProduct(MVector v) {
+	int crossProduct(GVector v) {
 		return ( (this->x * v.y) - (this->y * v.x) );
 	}
 
 	// cosO * |a| * |b|
-	int dotProduct(MVector v) {
+	int dotProduct(GVector v) {
 		return ( (this->x * v.x) + (this->y * v.y) );
 	}
 };
@@ -44,14 +53,14 @@ struct MVector {
 struct Line {
 	int A, B, C;
 
-	Line(const MVector &p1, const MVector &p2) {
+	Line(const GVector &p1, const GVector &p2) {
 		// Ax + By = C general form
 		this->A = (p2.y - p1.y); 
 		this->B = (p2.x - p1.x) * (-1);
 		this->C = (A * p1.x) + (B * p1.y);
 	}
 
-	bool hasPoint(const MVector &p) {
+	bool hasPoint(const GVector &p) {
 		return ( this->A*p.x + this->B*p.y == this->C );
 	}
 };
@@ -97,3 +106,22 @@ struct LineSegment {
 		return false;
 	}
 };
+
+// verifica se o ponto P está contido no triângulo ABC 
+bool checaContinenciaEmTriangulo(Point &a, Point &b, Point &c, Point &p) {
+	// para que p esteja em ABC, é necessário que o produto vetorial
+	// AB x AP, BC x BP, CA x CP possua o mesmo sinal, isto é, os vetores possuem
+	// o mesmo sentido.
+	GVector ab = GVector(a, b), bc = GVector(b, c), ca = GVector(c, a), ap = GVector(a, p), 
+	bp = GVector(b, p), cp = GVector(c, p);
+
+	int s1, s2, s3;
+	
+	s1 = ab.crossProduct(ap);
+	s2 = bc.crossProduct(bp);
+	s3 = ca.crossProduct(cp);
+
+	if(s1 > 0 and s2 > 0 and s3 > 0) return true;
+	if(s1 < 0 and s2 < 0 and s3 < 0) return true;
+	return false;
+}

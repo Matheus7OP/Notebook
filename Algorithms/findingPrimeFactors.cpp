@@ -8,7 +8,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 87000000
+#define MAXN 1000000
 typedef long long ll;
 
 unsigned int primos[MAXN], fatores[MAXN];
@@ -26,7 +26,7 @@ void crivo() {
 	}
 }
 
-// Após rodar o Crivo, esse método adiciona os fatores primos
+// Após rodar o Crivo, este método adiciona os fatores primos
 // do número N no array fatores[]
 void primeFactors(ll n) {
 	int p = 0;

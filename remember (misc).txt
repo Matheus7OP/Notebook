@@ -1,8 +1,7 @@
-compilador:
-#pragma GCC optimize ("O3")
-#pragma GCC target ("sse4")
+// otimizações no compilador
+#pragma GCC target("sse4")
+#pragma GCC optimize("Ofast")
 
-input/output:
-ios::sync_with_stdio(false);
-cin.tie(null); -> possível usar apenas em problemas não interativos
-M_PI
+// otimizações do C++ I/O
+ios::sync_with_stdio(false); // lembrar de não usar I/O de C, pois estará dessincronizado do I/O de C++
+cin.tie(null) // possível usar em problemas não interativos

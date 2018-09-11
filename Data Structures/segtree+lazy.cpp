@@ -1,26 +1,29 @@
 /*
  * Matheus Oliveira
  * 07/11/2017
- * 1500_st.cpp
+ * segtree+lazy.cpp
+ *
+ * Using segment tree to store and update (using 'lazy' technique) sum of intervals
+ * Range update is done in O(logn) 
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long int lli;
 #define MAXN 100010
+typedef long long ll;
 
-long long int segtree[MAXN*4], elementos[MAXN], lazy[MAXN*4];
+ll segtree[MAXN*4], elements[MAXN], lazy[MAXN*4];
 
-void build(int id, lli left, lli right) {
+void build(int id, int left, int right) {
 	lazy[id] = 0;
 
 	if(left == right) {
-		segtree[id] = elementos[left];
+		segtree[id] = elements[left];
 		return;
 	}
 
-	lli mid = (left+right)/2;
+	int mid = (left+right)/2;
 
 	build(id*2, left, mid);
 	build(id*2+1, mid+1, right);
@@ -28,7 +31,7 @@ void build(int id, lli left, lli right) {
 	segtree[id] = segtree[id*2] + segtree[id*2+1];
 }
 
-void rangeUpdate(int id, int left, int right, lli a, lli b, lli value) {
+void rangeUpdate(int id, int left, int right, int a, int b, ll value) {
 	if(lazy[id] != 0) {
 		segtree[id] += (right-left+1) * lazy[id];
 
@@ -61,7 +64,7 @@ void rangeUpdate(int id, int left, int right, lli a, lli b, lli value) {
 	segtree[id] = segtree[id*2] + segtree[id*2+1];
 }
 
-lli query(int id, int left, int right, lli a, lli b) {
+ll query(int id, int left, int right, int a, int b) {
 	if(right < a or left > b) return 0;
 
 	if(lazy[id] != 0) {
@@ -79,33 +82,4 @@ lli query(int id, int left, int right, lli a, lli b) {
 
 	int mid = (left+right)/2;
 	return query(id*2, left, mid, a, b) + query(id*2+1, mid+1, right, a, b);
-}
-
-int main() {
-	int casos, queries, i, numeros, op;
-	lli left, right, value, a1, a2;
-
-	scanf("%d", &casos);
-
-	while(casos--) {
-		scanf("%d %d", &numeros, &queries);
-
-		for(i=1; i <= numeros; i++) elementos[i] = 0;
-		build(1, 1, numeros);
-
-		for(i=0; i < queries; i++) {
-			scanf("%d %lld %lld", &op, &a1, &a2);
-
-			left = min(a1, a2);
-			right = max(a1, a2);
-
-			if(op == 0) {
-				scanf("%lld", &value);
-				rangeUpdate(1, 1, numeros, left, right, value);
-			}
-			else printf("%lld\n", query(1, 1, numeros, left, right));
-		}
-	}
-
-	return 0;
 }

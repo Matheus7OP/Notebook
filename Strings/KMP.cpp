@@ -33,16 +33,16 @@ void buildPrefixFunction(const string &word) {
 	}
 }
 
-bool searchSubstr(const string &searchedWord, const string &text) {
+bool searchSubstr(const string &word, const string &pattern) {
 	int i, j;
 	i = j = 0;
 
 	while(true) {
-		if(j == ((int) searchedWord.size())) break;
-		if(searchedWord[j] == text[i]) {
+		if(j == ((int) word.size())) break;
+		if(word[j] == pattern[i]) {
 			i++;
 			j++;
-			if(i == ((int) text.size())) return true;
+			if(i == ((int) pattern.size())) return true;
 			continue;
 		}
 

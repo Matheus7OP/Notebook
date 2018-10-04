@@ -2,6 +2,9 @@
  * Matheus Oliveira
  * 08/01/2018
  * trieSimples.cpp
+ *
+ * Implementação de Trie recursiva, utilizando map (possui desempenho bem inferior à versão
+ * iterativa com ponteiros).
 */
 
 #include <bits/stdc++.h>

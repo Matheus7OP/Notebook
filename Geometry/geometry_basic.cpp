@@ -4,24 +4,23 @@
  * geometry (basic structures and ops).cpp
 */
 
-struct Point {
-	int x, y;
-
-	Point(int _x, int _y) {
-		this->x = _x;
-		this->y = _y;
-	}
-};
+#include <algorithm>
+using namespace std;
 
 struct GVector {
 	int x, y;
 
-	GVector(int _x, int _y) {
+	GVector(int _x = 0, int _y = 0) {
 		this->x = _x;
 		this->y = _y;
 	}
 
-	GVector operator+ (GVector p) {
+	GVector(GVector &a, GVector &b) {
+		this->x = b.x - a.x;
+		this->y = b.y - a.y;
+	}
+
+	GVector operator+(GVector &p) {
 		GVector result;
 
 		result.x = this->x + p.x;
@@ -39,13 +38,17 @@ struct GVector {
 		return result;
 	}
 
+	bool operator==(GVector &p) {
+		return (this->x == p.x and this->y == p.y);
+	}
+
 	// senO * |a| * |b|
-	int crossProduct(GVector v) {
+	int crossProduct(GVector &v) {
 		return ( (this->x * v.y) - (this->y * v.x) );
 	}
 
 	// cosO * |a| * |b|
-	int dotProduct(GVector v) {
+	int dotProduct(GVector &v) {
 		return ( (this->x * v.x) + (this->y * v.y) );
 	}
 };
@@ -68,7 +71,7 @@ struct Line {
 struct LineSegment {
 	int A, B, C, xl, xr, yl, yr;
 
-	LineSegment(Point &p1 = nada, Point &p2 = nada) {
+	LineSegment(GVector &p1, GVector &p2) {
 		this->A = p2.y - p1.y;
 		this->B = (p2.x - p1.x) * (-1);
 		this->C = (p1.x * A) + (p1.y * B);
@@ -88,12 +91,13 @@ struct LineSegment {
 		// são paralelos
 		if( (this->A * s.B) - (this->B * s.A) == 0 ) return false;
 
-		int x = ((this->C * s.B) - (this->B * s.C)) / ( (this->A * s.B) - (this->B * s.A) ),
-		y = ((this->C * s.A) - (this->A * s.C)) / ( (this->B * s.A) - (this->A * s.B) );
+		int x = ((this->C * s.B) - (this->B * s.C)) / ( (this->A * s.B) - (this->B * s.A) );
+		int y = ((this->C * s.A) - (this->A * s.C)) / ( (this->B * s.A) - (this->A * s.B) );
 
-		Point intersec = Point(x, y);
+		GVector intersec = GVector(x, y);
+		GVector pl = GVector(xl, yl), pr = GVector(xr, yr);
+
 		if( intersec == pl or intersec == pr ) return false;
-
 		bool cond1, cond2;
 
 		if( x >= this->xl and x <= this->xr and y >= this->yl and y <= this->yr ) cond1 = true;
@@ -108,12 +112,12 @@ struct LineSegment {
 };
 
 // verifica se o ponto P está contido no triângulo ABC 
-bool checaContinenciaEmTriangulo(Point &a, Point &b, Point &c, Point &p) {
+bool checaContinenciaEmTriangulo(GVector &a, GVector &b, GVector &c, GVector &p) {
 	// para que p esteja em ABC, é necessário que o produto vetorial
 	// AB x AP, BC x BP, CA x CP possua o mesmo sinal, isto é, os vetores possuem
 	// o mesmo sentido.
-	GVector ab = GVector(a, b), bc = GVector(b, c), ca = GVector(c, a), ap = GVector(a, p), 
-	bp = GVector(b, p), cp = GVector(c, p);
+	GVector ab = GVector(a, b), bc = GVector(b, c), ca = GVector(c, a);
+	GVector ap = GVector(a, p), bp = GVector(b, p), cp = GVector(c, p);
 
 	int s1, s2, s3;
 	

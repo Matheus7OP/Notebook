@@ -1,20 +1,19 @@
 /*
  * Matheus Oliveira e Doritos :D
- * 01/08/2018 ( hoje )
+ * 01/08/2018
  * primeFactorsLogN.cpp
 */
+
 #include <bits/stdc++.h>
 #define MAXX 87000000
 
 using namespace std;
-
 typedef long long ll;
 
-vector < ll > menorFator (MAXX, -1);
+vector <ll> menorFator (MAXX, -1);
 
 void crivo() {
 	register unsigned long long i, j;
-
 	menorFator[1] = 1;
 
 	for( i=2 ; i <= MAXX; i ++) {

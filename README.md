@@ -1,2 +1,2 @@
 # Notebook
-Some codes of my competitive programming notebook.
+Some codes from my competitive programming notebook.

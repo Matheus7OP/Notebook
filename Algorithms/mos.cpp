@@ -8,7 +8,6 @@
 using namespace std;
 
 #define MAXN 100010
-
 typedef pair<int, int> P;
 
 int intervalo, freq[MAXN], tam, queries, i, elementos[MAXN], p1, p2, l, r, counter, ans[MAXN], ordem;

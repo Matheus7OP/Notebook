@@ -1,14 +1,18 @@
 /*
  * Matheus Oliveira
  * 29/11/2017
- * fluxo.cpp
+ * edmondKarp.cpp
+ * 
+ * Max flow using Edmonds Karp algorithm.
+ * Time complexity: O(V*E²)
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 150
 #define INF 1e9
+#define MAXN 150
+
 int capacities[MAXN][MAXN], visited[MAXN], from[MAXN];
 vector<int> graph[MAXN];
 
@@ -20,25 +24,25 @@ int findPath() {
 	memset(from, -1, sizeof from);
 
 	while(not bfs.empty()) bfs.pop();
-	int i, qtdN, atual, neighbor, previous;
+	int i, qtdN, actual, neighbor, previous;
 
 	bfs.push(source);
 	bool endWhile = false;
 
 	while( not bfs.empty() ) {
-		atual = bfs.front();
+		actual = bfs.front();
 		bfs.pop();
 
-		if(visited[atual]) continue;
-		visited[atual] = 1;
+		if(visited[actual]) continue;
+		visited[actual] = 1;
 
-		qtdN = graph[atual].size();
+		qtdN = graph[actual].size();
 
 		for(i=0; i < qtdN; i++) {
-			neighbor = graph[atual][i];
+			neighbor = graph[actual][i];
 
-			if(visited[neighbor] == 0 and capacities[atual][neighbor] > 0) {
-				from[neighbor] = atual;
+			if(visited[neighbor] == 0 and capacities[actual][neighbor] > 0) {
+				from[neighbor] = actual;
 				bfs.push(neighbor);
 
 				if(neighbor == sink) {
@@ -51,26 +55,26 @@ int findPath() {
 		if(endWhile) break;
 	}
 
-	atual = sink;
+	actual = sink;
 	int minPath = INF;
 
-	while( from[atual] != -1 ) {
-		previous = from[atual];
+	while( from[actual] != -1 ) {
+		previous = from[actual];
 
-		minPath = min(minPath, capacities[previous][atual]);
-		atual = previous;
+		minPath = min(minPath, capacities[previous][actual]);
+		actual = previous;
 	}
 
 	if(minPath == INF) return 0;
 
-	atual = sink;
-	while( from[atual] != -1 ) {
-		previous = from[atual];
+	actual = sink;
+	while( from[actual] != -1 ) {
+		previous = from[actual];
 
-		capacities[previous][atual] -= minPath;
-		capacities[atual][previous] += minPath;
+		capacities[previous][actual] -= minPath;
+		capacities[actual][previous] += minPath;
 
-		atual = previous;
+		actual = previous;
 	}
 
 	return minPath;
@@ -90,14 +94,14 @@ int maxFlow() {
 }
 
 int main() {
-	int linhas, i, j, peso, node1, node2, maxF;
+	int lines, i, j, c, node1, node2, maxF;
 	char n1, n2;
 
-	scanf("%d", &linhas);
+	scanf("%d", &lines);
 	getchar();
 
-	for(i=0; i < linhas; i++) {
-		scanf("%c %c %d", &n1, &n2, &peso);
+	for(i=0; i < lines; i++) {
+		scanf("%c %c %d", &n1, &n2, &c);
 		getchar();
 
 		node1 = n1;
@@ -106,8 +110,7 @@ int main() {
 		graph[node1].push_back(node2);
 		graph[node2].push_back(node1);
 
-		capacities[node1][node2] += peso;
-		capacities[node2][node1] += peso;
+		capacities[node1][node2] += c;
 	}
 
 	printf("%d\n", maxFlow());

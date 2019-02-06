@@ -4,13 +4,13 @@ using namespace std;
 #define INF 1e9
 #define MAXN 100007
 
-struct edge{
+struct edge {
     int to, cap, rev;
     edge(int _to, int _cap, int _rev): to(_to), cap(_cap), rev(_rev){}
 };
 
 struct dinic {
-	// REMEMBER to check if long long is needed and if INF value is enough
+    // REMEMBER to check if long long is needed and if INF value is enough
     vector<edge> graph[MAXN];
     int level[MAXN], iter[MAXN];
 

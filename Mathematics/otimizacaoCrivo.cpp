@@ -26,18 +26,3 @@ void crivo() {
 		}
 	}
 }
- 
-int main() {
-	int queries, i;
-	unsigned long index;
-	scanf("%d", &queries);
- 
-	crivo();
- 
-	for(i=0; i < queries; i++) {
-		scanf("%lu", &index);
-		printf("%lu\n", primos[index-1]);
-	}
- 
-	return 0;
-} 

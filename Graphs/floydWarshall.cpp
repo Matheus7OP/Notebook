@@ -1,8 +1,9 @@
 /*
  * Matheus Oliveira
  * 21/01/2018
- * Floyd-Warshall
- * O(N^3)
+ * floydWarshall.cpp
+ * 
+ * O(N^3) algorithm to find shortest path between every pair of nodes in a given graph
 */
 
 for(int k = 0; k < n; k++) {

@@ -1,7 +1,7 @@
-// otimizações no compilador
+// algumas otimizações do compilador
 #pragma GCC target("sse4")
 #pragma GCC optimize("Ofast")
 
-// otimizações do C++ I/O
+// otimizações do I/O do C++
 ios::sync_with_stdio(false); // lembrar de não usar I/O de C, pois estará dessincronizado do I/O de C++
 cin.tie(null) // possível usar em problemas não interativos

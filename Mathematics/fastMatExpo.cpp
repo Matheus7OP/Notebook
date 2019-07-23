@@ -1,7 +1,7 @@
 /*
  * Matheus Oliveira
  * 01:06:49 22/06/2019
- * Fast Matrix Exponentiation (more general and clean version)   =)
+ * Fast Matrix Exponentiation (more general and clean version)  =)
 */
 
 #include <bits/stdc++.h>

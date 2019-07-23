@@ -12,40 +12,40 @@ using namespace std;
 #define MAXN 201110
 typedef long long ll;
 
-ll elements[MAXN], segtree[4*MAXN];
+ll v[MAXN], stree[4*MAXN];
 
-void build(int id, int left, int right) {
-	if(left == right) {
-		segtree[id] = elements[left];
+void build(int id, int l, int r) {
+	if(l == r) {
+		stree[id] = v[l];
 		return;
 	}
 
-	int mid = (left + right)/2;
+	int mid = (l+r) >> 1;
 	
-	build(id*2, left, mid);
-	build(id*2+1, mid+1, right);
+	build(id*2, l, mid);
+	build(id*2+1, mid+1, r);
 
-	segtree[id] = max(segtree[id*2], segtree[id*2+1]);
+	stree[id] = max(stree[id*2], stree[id*2+1]);
 }
 
-void update(int id, int left, int right, int index) {
-	if(left == right) {
-		segtree[id] = elements[left];
+void update(int id, int l, int r, int index) {
+	if(l == r) {
+		stree[id] = v[l];
 		return;
 	}
 
-	int mid = (left + right)/2;
+	int mid = (l+r) >> 1;
 
-	if(index <= mid) update(id*2, left, mid, index);
-	else update(id*2+1, mid+1, right, index);
+	if(index <= mid) update(id*2, l, mid, index);
+	else update(id*2+1, mid+1, r, index);
 
-	segtree[id] = max(segtree[id*2], segtree[id*2+1]);
+	stree[id] = max(stree[id*2], stree[id*2+1]);
 }
 
-ll query(int id, int left, int right, int a, int b) {
-	if(left >= a and right <= b) return segtree[id];
-	if(right < a or left > b) return ((ll) -1);
+ll query(int id, int l, int r, int a, int b) {
+	if(l >= a and r <= b) return stree[id];
+	if(r < a or l > b) return ((ll) -1);
 
-	int mid = (left+right)/2;
-	return max( query(id*2, left, mid, a, b), query(id*2+1, mid+1, right, a, b) );
+	int mid = (l+r) >> 1;
+	return max( query(id*2, l, mid, a, b), query(id*2+1, mid+1, r, a, b) );
 }

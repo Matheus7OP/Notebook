@@ -1,7 +1,11 @@
 /*
  * Matheus Oliveira
  * 21/10/2017
- * 220B.cpp
+ *
+ * Example of offline query processing using "Mo's algorithm" to reduce as much as possible 
+ * the number of movements the two pointers does.
+ * 
+ * Code shown here was used to solve: https://codeforces.com/problemset/problem/221/D
 */
 
 #include <bits/stdc++.h>
@@ -10,7 +14,8 @@ using namespace std;
 #define MAXN 100010
 typedef pair<int, int> P;
 
-int intervalo, freq[MAXN], tam, queries, i, elementos[MAXN], p1, p2, l, r, counter, ans[MAXN], ordem;
+int freq[MAXN], elements[MAXN], ans[MAXN];
+int intervalo, tam, queries, i, p1, p2, l, r, counter, ordem;
 
 bool compare(pair<P, int> f, pair<P, int> s) {
 	if(f.first.first/intervalo == s.first.first/intervalo) return f.first.second < s.first.second;
@@ -21,7 +26,7 @@ int main() {
 	scanf("%d %d", &tam, &queries);
 	intervalo = sqrt(tam);
 
-	for(i=0; i < tam; i++) scanf("%d", &elementos[i]);
+	for(i=0; i < tam; i++) scanf("%d", &elements[i]);
 	vector< pair< P, int > > mos;
 
 	for(i=0; i < queries; i++) {
@@ -30,12 +35,11 @@ int main() {
 	}
 
 	sort(mos.begin(), mos.end(), compare);
-
 	p1 = p2 = counter = 0;
 
-	if(elementos[p1] < MAXN) {
-		freq[ elementos[p1] ]++;
-		if( freq[ elementos[p1] ] == elementos[p1] ) counter++;
+	if(elements[p1] < MAXN) {
+		freq[ elements[p1] ]++;
+		if( freq[ elements[p1] ] == elements[p1] ) counter++;
 	}
 
 	for(i=0; i < queries; i++) {
@@ -43,10 +47,10 @@ int main() {
 
 		// movimento do primeiro ponteiro
 		while(p1 < l) {
-			if(elementos[p1] < MAXN) {
-				if( freq[ elementos[p1] ] == elementos[p1] ) counter--;
-				freq[ elementos[p1] ]--;
-				if( freq[ elementos[p1] ] == elementos[p1] ) counter++;
+			if(elements[p1] < MAXN) {
+				if( freq[ elements[p1] ] == elements[p1] ) counter--;
+				freq[ elements[p1] ]--;
+				if( freq[ elements[p1] ] == elements[p1] ) counter++;
 			}
 
 			p1++;
@@ -54,10 +58,10 @@ int main() {
 		while(p1 > l) {
 			p1--;
 
-			if(elementos[p1] < MAXN) {
-				if( freq[ elementos[p1] ] == elementos[p1] ) counter--;
-				freq[ elementos[p1] ]++;
-				if( freq[ elementos[p1] ] == elementos[p1] ) counter++;
+			if(elements[p1] < MAXN) {
+				if( freq[ elements[p1] ] == elements[p1] ) counter--;
+				freq[ elements[p1] ]++;
+				if( freq[ elements[p1] ] == elements[p1] ) counter++;
 			}
 		}
 
@@ -65,17 +69,17 @@ int main() {
 		while(p2 < r) {
 			p2++;
 
-			if(elementos[p2] < MAXN) {
-				if( freq[ elementos[p2] ] == elementos[p2] ) counter--;
-				freq[ elementos[p2] ]++;
-				if( freq[ elementos[p2] ] == elementos[p2] ) counter++;
+			if(elements[p2] < MAXN) {
+				if( freq[ elements[p2] ] == elements[p2] ) counter--;
+				freq[ elements[p2] ]++;
+				if( freq[ elements[p2] ] == elements[p2] ) counter++;
 			}
 		}
 		while(p2 > r) {
-			if(elementos[p2] < MAXN) {
-				if( freq[ elementos[p2] ] == elementos[p2] ) counter--;
-				freq[ elementos[p2] ]--;
-				if( freq[ elementos[p2] ] == elementos[p2] ) counter++;
+			if(elements[p2] < MAXN) {
+				if( freq[ elements[p2] ] == elements[p2] ) counter--;
+				freq[ elements[p2] ]--;
+				if( freq[ elements[p2] ] == elements[p2] ) counter++;
 			}
 
 			p2--;
@@ -85,6 +89,5 @@ int main() {
 	}
 
 	for(i=0; i < queries; i++) printf("%d\n", ans[i]);
-
 	return 0;
 }

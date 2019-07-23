@@ -1,7 +1,7 @@
 /*
  * Matheus Oliveira
  * 29/11/2017
- * fluxo.cpp
+ * edmondKarp.cpp
 */
 
 #include <bits/stdc++.h>
@@ -9,11 +9,12 @@ using namespace std;
 
 #define MAXN 150
 #define INF 1e9
-int capacities[MAXN][MAXN], visited[MAXN], from[MAXN];
-vector<int> graph[MAXN];
 
 int source = 'A', sink = 'Z';
+int capacities[MAXN][MAXN], visited[MAXN], from[MAXN];
+
 queue<int> bfs;
+vector<int> graph[MAXN];
 
 int findPath() {
 	memset(visited, 0, sizeof visited);

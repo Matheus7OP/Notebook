@@ -54,7 +54,6 @@ int lca(int u, int v) {
 	if( levels[u] < levels[v] ) swap(u, v);
 	
 	int lg, i;
- 
 	for(lg=1; (1 << lg) <= levels[u]; lg++);
 	lg--;
  

@@ -8,9 +8,7 @@
 using namespace std;
 
 #define MAXN 1010
-
 typedef pair<int, int> P;
-#define debug(P) printf("[%d, %d]\n", P.first, P.second);
 
 int fenwick2d[MAXN][MAXN], linhas, colunas, limite;
 

@@ -13,29 +13,29 @@ using namespace std;
 #define MAXN 100010
 typedef long long ll;
 
-ll segtree[MAXN*4], elements[MAXN], lazy[MAXN*4];
+ll stree[MAXN*4], v[MAXN], lazy[MAXN*4];
 
-void build(int id, int left, int right) {
+void build(int id, int l, int r) {
 	lazy[id] = 0;
 
-	if(left == right) {
-		segtree[id] = elements[left];
+	if(l == r) {
+		stree[id] = v[l];
 		return;
 	}
 
-	int mid = (left+right)/2;
+	int mid = (l+r) >> 1;
 
-	build(id*2, left, mid);
-	build(id*2+1, mid+1, right);
+	build(id*2, l, mid);
+	build(id*2+1, mid+1, r);
 
-	segtree[id] = segtree[id*2] + segtree[id*2+1];
+	stree[id] = stree[id*2] + stree[id*2+1];
 }
 
-void rangeUpdate(int id, int left, int right, int a, int b, ll value) {
+void rangeUpdate(int id, int l, int r, int a, int b, ll value) {
 	if(lazy[id] != 0) {
-		segtree[id] += (right-left+1) * lazy[id];
+		stree[id] += (r-l+1) * lazy[id];
 
-		if(left != right) {
+		if(l != r) {
 			lazy[id*2] += lazy[id];
 			lazy[id*2+1] += lazy[id];
 		}
@@ -43,12 +43,12 @@ void rangeUpdate(int id, int left, int right, int a, int b, ll value) {
 		lazy[id] = 0;
 	}
 
-	if(right < a or left > b) return;
+	if(r < a or l > b) return;
 
-	if(left >= a and right <= b) {
-		segtree[id] += (right-left+1) * value;
+	if(l >= a and r <= b) {
+		stree[id] += (r-l+1) * value;
 
-		if(left != right) {
+		if(l != r) {
 			lazy[id*2] += value;
 			lazy[id*2+1] += value;
 		}
@@ -56,21 +56,21 @@ void rangeUpdate(int id, int left, int right, int a, int b, ll value) {
 		return;
 	}
 
-	int mid = (left+right)/2;
+	int mid = (l+r) >> 1;
 
-	rangeUpdate(id*2, left, mid, a, b, value);
-	rangeUpdate(id*2+1, mid+1, right, a, b, value);
+	rangeUpdate(id*2, l, mid, a, b, value);
+	rangeUpdate(id*2+1, mid+1, r, a, b, value);
 
-	segtree[id] = segtree[id*2] + segtree[id*2+1];
+	stree[id] = stree[id*2] + stree[id*2+1];
 }
 
-ll query(int id, int left, int right, int a, int b) {
-	if(right < a or left > b) return 0;
+ll query(int id, int l, int r, int a, int b) {
+	if(r < a or l > b) return 0;
 
 	if(lazy[id] != 0) {
-		segtree[id] += (right-left+1) * lazy[id];
+		stree[id] += (r-l+1) * lazy[id];
 
-		if(left != right) {
+		if(l != r) {
 			lazy[id*2] += lazy[id];
 			lazy[id*2+1] += lazy[id];
 		}
@@ -78,8 +78,8 @@ ll query(int id, int left, int right, int a, int b) {
 		lazy[id] = 0;
 	}
 
-	if(left >= a and right <= b) return segtree[id];
+	if(l >= a and r <= b) return stree[id];
 
-	int mid = (left+right)/2;
-	return query(id*2, left, mid, a, b) + query(id*2+1, mid+1, right, a, b);
+	int mid = (l+r) >> 1;
+	return query(id*2, l, mid, a, b) + query(id*2+1, mid+1, r, a, b);
 }

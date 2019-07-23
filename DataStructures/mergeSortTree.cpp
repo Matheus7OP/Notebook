@@ -17,13 +17,13 @@ using namespace std;
 int elements[MAXN];
 vector<int> mstree[MAXN * 4];
 
-void build(int id, int left, int right) {
-	if(left == right) mstree[id].pb( elements[left] );
+void build(int id, int l, int r) {
+	if(l == r) mstree[id].pb( elements[l] );
 	else {
-		int mid = (left + right) >> 1;
+		int mid = (l + r) >> 1;
 
-		build(id*2, left, mid);
-		build(id*2+1, mid+1, right);
+		build(id*2, l, mid);
+		build(id*2+1, mid+1, r);
 
 		merge(mstree[id*2].begin(), mstree[id*2].end(),
 			mstree[id*2+1].begin(), mstree[id*2+1].end(),
@@ -32,12 +32,12 @@ void build(int id, int left, int right) {
 }
 
 // returns how many elements are less than or equal to 'val'
-int query(int id, int left, int right, int a, int b, int val) {
-	if(b < left or a > right) return 0;
-	if(left >= a and right <= b) {
+int query(int id, int l, int r, int a, int b, int val) {
+	if(b < l or a > r) return 0;
+	if(l >= a and r <= b) {
 		return upper_bound(mstree[id].begin(), mstree[id].end(), val) - mstree[id].begin();
 	}
 
-	int mid = (left + right) >> 1;
-	return query(id*2, left, mid, a, b, val) + query(id*2 + 1, mid+1, right, a, b, val);
+	int mid = (l + r) >> 1;
+	return query(id*2, l, mid, a, b, val) + query(id*2 + 1, mid+1, r, a, b, val);
 }

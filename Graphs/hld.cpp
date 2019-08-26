@@ -1,10 +1,9 @@
 /*
  * Matheus Oliveira
  * 16:35:50 24/08/2019
- * hldOnVertex.cpp
+ * hld.cpp
  *
  * Using Heavy-light decomposition to answer queries on trees in O(nlog²n) time complexity
- * Note: this implementation assumes the data is being stored on vertices
 */
 
 #include <bits/stdc++.h>
@@ -46,6 +45,7 @@ int dfs(int node) {
 
 		parents[neighbor] = node;
 		levels[neighbor] = levels[node] + 1;
+		// values[neighbor] = graph[node][i].first; data on edges
 
 		ans += dfs(neighbor);
 		if(sz[neighbor] > maxSz) maxSz = sz[neighbor], idx = neighbor;
@@ -81,6 +81,7 @@ int queryPath(int a, int b) {
 
 	if( levels[a] < levels[b] ) swap(a, b);
 	ans = max(ans, queryStree(1, 1, n, posInChain[b], posInChain[a]));
+	// ans = max(ans, queryStree(1, 1, n, posInChain[ heavy[b] ], posInChain[a])); data on edges
 
 	return ans;
 }

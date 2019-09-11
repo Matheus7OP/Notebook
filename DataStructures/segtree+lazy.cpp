@@ -10,7 +10,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100010
+#define MAXN
 typedef long long ll;
 
 ll stree[MAXN*4], v[MAXN], lazy[MAXN*4];
@@ -23,10 +23,10 @@ void build(int id, int l, int r) {
 		return;
 	}
 
-	int mid = (l+r) >> 1;
+	int m = (l+r) >> 1;
 
-	build(id*2, l, mid);
-	build(id*2+1, mid+1, r);
+	build(id*2, l, m);
+	build(id*2+1, m+1, r);
 
 	stree[id] = stree[id*2] + stree[id*2+1];
 }
@@ -56,10 +56,10 @@ void rangeUpdate(int id, int l, int r, int a, int b, ll value) {
 		return;
 	}
 
-	int mid = (l+r) >> 1;
+	int m = (l+r) >> 1;
 
-	rangeUpdate(id*2, l, mid, a, b, value);
-	rangeUpdate(id*2+1, mid+1, r, a, b, value);
+	rangeUpdate(id*2, l, m, a, b, value);
+	rangeUpdate(id*2+1, m+1, r, a, b, value);
 
 	stree[id] = stree[id*2] + stree[id*2+1];
 }
@@ -80,6 +80,6 @@ ll query(int id, int l, int r, int a, int b) {
 
 	if(l >= a and r <= b) return stree[id];
 
-	int mid = (l+r) >> 1;
-	return query(id*2, l, mid, a, b) + query(id*2+1, mid+1, r, a, b);
+	int m = (l+r) >> 1;
+	return query(id*2, l, m, a, b) + query(id*2+1, m+1, r, a, b);
 }

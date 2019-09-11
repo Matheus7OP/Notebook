@@ -10,7 +10,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100000
+#define MAXN
 
 struct TrieNode {
 	map<char, TrieNode> children;

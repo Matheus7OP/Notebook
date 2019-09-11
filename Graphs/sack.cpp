@@ -11,8 +11,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100100
-#define pb(a) push_back(a)
+#define MAXN
+#define pb push_back
 typedef long long ll;
 
 ll ans[MAXN], globalAns, aux[MAXN];

@@ -3,7 +3,7 @@ using namespace std;
 
 #define INF
 #define MAXN
-#define make_pair(a, b) mp(a, b)
+#define mp make_pair
 
 typedef pair<int, int> pii;
 

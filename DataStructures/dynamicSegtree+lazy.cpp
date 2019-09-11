@@ -19,7 +19,7 @@ struct Node {
 	Node *left, *right;
 	Node() : sum(0), lazy(0), left(NULL), right(NULL) {}
 	// REMEMBER to deallocate nodes to avoid memory leak in problems with more than one test case
-} *root;
+} *root; // root = new Node();
 
 void doLazy(Node *node, ll l, ll r) {
 	node->sum += (r - l + 1LL) * node->lazy;
@@ -81,26 +81,4 @@ ll query(Node *node, ll l, ll r, ll a, ll b) {
 	if( node->right ) s2 = query(node->right, mid+1, r, a, b);
 
 	return (s1 + s2);
-}
-
-int main() {
-	ll op, l, r, val, idx;
-	root = new Node();
-
-	while(true) {
-		// 1 -> add
-		// 2 -> query
-
-		scanf("%lld", &op);
-		if(op == 1LL) {
-			scanf("%lld %lld %lld", &l, &r, &val);
-			update(root, 1, MAXN, l, r, val);
-		}
-		else {
-			scanf("%lld %lld", &l, &r);
-			printf("%lld\n", query(root, 1, MAXN, l, r));
-		}
-	}
-
-	return 0;
 }

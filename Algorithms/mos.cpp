@@ -11,13 +11,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100010
-typedef pair<int, int> P;
+#define mp make_pair
+typedef pair<int, int> pii;
 
+vector< pair< pii, int > > mos;
 int freq[MAXN], elements[MAXN], ans[MAXN];
 int intervalo, tam, queries, i, p1, p2, l, r, counter, ordem;
 
-bool compare(pair<P, int> f, pair<P, int> s) {
+bool compare(pair<pii, int> f, pair<pii, int> s) {
 	if(f.first.first/intervalo == s.first.first/intervalo) return f.first.second < s.first.second;
 	return f.first.first/intervalo < s.first.first/intervalo;
 }
@@ -27,11 +28,10 @@ int main() {
 	intervalo = sqrt(tam);
 
 	for(i=0; i < tam; i++) scanf("%d", &elements[i]);
-	vector< pair< P, int > > mos;
 
 	for(i=0; i < queries; i++) {
 		scanf("%d %d", &l, &r);
-		mos.push_back( make_pair( make_pair(l-1, r-1), i ) );
+		mos.push_back( mp( mp(l-1, r-1), i ) );
 	}
 
 	sort(mos.begin(), mos.end(), compare);

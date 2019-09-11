@@ -1,4 +1,4 @@
-// algumas otimizações do compilador
+// otimizações do compilador
 #pragma GCC target("sse4")
 #pragma GCC optimize("Ofast")
 

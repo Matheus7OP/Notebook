@@ -7,8 +7,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 3510
-#define pb(a) push_back(a)
+#define MAXN
+#define pb push_back
 
 bool vis[MAXN];
 int match[MAXN];

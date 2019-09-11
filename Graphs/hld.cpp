@@ -9,8 +9,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF 1e9
-#define MAXN 100007
+#define INF 
+#define MAXN 
 
 vector<int> graph[MAXN];
 int posInChain[MAXN], heads[MAXN], heavy[MAXN], pos;

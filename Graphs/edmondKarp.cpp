@@ -7,8 +7,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 150
-#define INF 1e9
+#define MAXN 
+#define INF 
 
 int source = 'A', sink = 'Z';
 int capacities[MAXN][MAXN], visited[MAXN], from[MAXN];

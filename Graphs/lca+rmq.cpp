@@ -7,14 +7,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 20010
-#define INF 1e9
+#define INF
+#define MAXN
 
-typedef pair<int, int> P;
+typedef pair<int, int> pii;
 
-int parents[MAXN], rmq[MAXN][50], rank1[MAXN], ilhas, rmqParent[MAXN], levels[MAXN], ancestors[MAXN][50], pai[MAXN], visited[MAXN];
+vector<pii> tree[MAXN];
 int aux;
-vector<P> tree[MAXN];
+int parents[MAXN], rmq[MAXN][50], rank1[MAXN], ilhas, rmqParent[MAXN], levels[MAXN], ancestors[MAXN][50], pai[MAXN], visited[MAXN];
 
 // array parents sendo utilizado no union find. array pai sendo utilizado no lca.
 
@@ -25,16 +25,12 @@ int read(int node) {
 
 void join(int n1, int n2) {
 	int s1 = read(n1), s2 = read(n2);
+	
 	if(s1 == s2) return;
+	if(rank1[s1] < rank1[s2]) swap(s1, s2);
 
-	if(rank1[s1] > rank1[s2]) parents[s2] = s1;
-	else {
-		if(rank1[s2] > rank1[s1]) parents[s1] = s2;
-		else {
-			rank1[s2]++;
-			parents[s1] = s2;
-		}
-	}
+	parents[s2] = s1;
+	rank1[s1] += rank1[s2] + 1;
 }
 
 void dfs(int node) {
@@ -111,53 +107,4 @@ int rangeMinimum(int u, int v) {
 	ans = min(ans, rmq[u][0]);
 	ans = min(ans, rmq[v][0]);
 	return ans;
-}
-
-int main() {
-	int edges, sedes, n1, n2, i, peso, j;
-
-	pair<int, P> atual;
-	priority_queue< pair<int, P> > kruskal;
-
-	while(scanf("%d %d %d", &ilhas, &edges, &sedes) != EOF) {
-		for(i=1; i <= ilhas; i++) {
-			tree[i].clear();
-			rmqParent[i] = INF;
-			parents[i] = -1;
-			visited[i] = 0;
-			for(j=0; j < 50; j++) rmq[i][j] = -1, ancestors[i][j] = -1;
-		}
-
-		for(i=0; i < edges; i++) {
-			scanf("%d %d %d", &n1, &n2, &peso);
-			kruskal.push( make_pair( peso, make_pair(n1, n2) ) );
-		}
-
-		while(not kruskal.empty()) {
-			atual = kruskal.top();
-			kruskal.pop();
-
-			n1 = atual.second.first, n2 = atual.second.second, peso = atual.first;
-
-			if( read(n1) == read(n2) ) continue;
-			join(n1, n2);
-
-			tree[n1].push_back( make_pair(peso, n2) );
-			tree[n2].push_back( make_pair(peso, n1) );
-		}
-
-		pai[1] = 1;
-		levels[1] = 0;
-		rmqParent[1] = INF;
-
-		dfs(1);
-		build();
-
-		for(i=0; i < sedes; i++) {
-			scanf("%d %d", &n1, &n2);
-			printf("%d\n", rangeMinimum(n1, n2));
-		}
-	} 
-
-	return 0;
 }

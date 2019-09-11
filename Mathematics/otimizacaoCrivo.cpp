@@ -10,18 +10,18 @@ using namespace std;
 #define MAXN 5000000
 #define MAXX 87000000
  
-unsigned long primos[MAXN+5];
+unsigned long primes[MAXN+5];
 vector<bool> is_prime (MAXX, true);
  
 void crivo() {
 	register unsigned long long i, j, counter = 0;
-    primos[counter++] = 2;
+    primes[counter++] = 2;
  
 	for(i=3; i <= MAXX; i += 2) {
 		if(is_prime[i]) {
-			primos[counter++] = i;
+			primes[counter++] = i;
 			if(counter == MAXN) break;
-			for(j = i*i; j <= MAXX; j += i) is_prime[j] = false;
+			for(j = i+i; j <= MAXX; j += i) is_prime[j] = false;
  
 		}
 	}

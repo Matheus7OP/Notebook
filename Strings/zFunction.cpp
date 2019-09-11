@@ -7,7 +7,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 2000010
+#define MAXN 
 int z[MAXN];
 
 // z[i] armazena o tamanho da maior substring que se inicia em word[i] e que também é prefixo da string word

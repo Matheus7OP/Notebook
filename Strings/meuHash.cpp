@@ -7,12 +7,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-typedef pair<ll, ll> P;
+#define MAXN
+#define mp make_pair
 
-#define MAXN 250007
+typedef long long ll;
+typedef pair<ll, ll> pll;
 
 struct DoubleHash {
+	// do precalc of powers outside of struct if necessary
 	ll powers1[MAXN], powers2[MAXN], values1[MAXN], values2[MAXN], prime1, prime2;
 
 	DoubleHash(const string &word, const ll base1 = 419, const ll base2 = 521, const ll prime1 = 82517999, const ll prime2 = 76824091) {
@@ -43,13 +45,13 @@ struct DoubleHash {
 		}
 	}
 
-	P hashSubstr(int l, int r) {
-		if(l == 0) return make_pair(values1[r], values2[r]);
+	pll hashSubstr(int l, int r) {
+		if(l == 0) return mp(values1[r], values2[r]);
 		ll r1, r2;	
 
 		r1 = (values1[r] - (values1[l-1] * powers1[r - l + 1])%this->prime1 + this->prime1) % this->prime1;
 		r2 = (values2[r] - (values2[l-1] * powers2[r - l + 1])%this->prime2 + this->prime2) % this->prime2;
 
-		return make_pair(r1, r2);
+		return mp(r1, r2);
 	}
 };

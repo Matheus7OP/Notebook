@@ -3,18 +3,17 @@
  * 13/04/2018
  * sparseTable.cpp
  *
- * (Exemplo com SPT de max)
+ * As an example, sparse table of maximum element in a given range
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF 2e9
-#define MAXL 18
-#define MAXN 100010
+#define MAXL 
+#define MAXN 
 typedef long long ll;
 
-int lg[MAXN], spt[MAXL][MAXN], elements[MAXN], n;
+int lg[MAXN], spt[MAXL][MAXN], v[MAXN], n;
 
 void build() {
 	int aux, val;
@@ -27,7 +26,7 @@ void build() {
 		lg[i] = val;
 	}
 
-	for(int i = 0; i < n; i++) spt[0][i] = elements[i];
+	for(int i = 0; i < n; i++) spt[0][i] = v[i];
 
 	for(int j = 1; j <= lg[n]; j++) {
 		for(int i = 0; (i + (1 << (j-1)) ) < n; i++) {
@@ -37,6 +36,6 @@ void build() {
 }
 
 int query(int l, int r) {
-	int elementosNoIntervalo = r-l+1;
-	return max( spt[ lg[elementosNoIntervalo] ][l], spt[ lg[elementosNoIntervalo] ][ r - (1 << lg[elementosNoIntervalo]) + 1 ] );
+	int qtdElements = r-l+1;
+	return max( spt[ lg[qtdElements] ][l], spt[ lg[qtdElements] ][ r - (1 << lg[qtdElements]) + 1 ] );
 }

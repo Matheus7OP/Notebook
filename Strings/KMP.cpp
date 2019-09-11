@@ -8,7 +8,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 3000000
+#define MAXN
 int prefixVal[MAXN];
 
 // prefixVal[i] armazena o valor do maior prefixo, até o index i, que também é sufixo da mesma substring [1, i]

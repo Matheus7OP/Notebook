@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF 1e9
-#define MAXN 100007
+#define INF 
+#define MAXN 
 
 struct edge {
     int to, cap, rev;
@@ -34,7 +34,7 @@ struct dinic {
             int actual = q.front();
             q.pop();
 
-            for(int i = 0; i < graph[actual].size(); i++) {
+            for(int i = 0; i < (int)graph[actual].size(); i++) {
                 edge &e = graph[actual][i];
                 if(e.cap > 0 && level[e.to] < 0){
                     level[e.to] = level[actual] + 1;
@@ -47,9 +47,9 @@ struct dinic {
     int dfs(int v, int t, int f) {
         if(v == t) return f;
 
-        for(int &i = iter[v]; i < graph[v].size(); i++) {
+        for(int &i = iter[v]; i < (int)graph[v].size(); i++) {
             edge &e = graph[v][i];
-            if(e.cap > 0 && level[v] < level[e.to]){
+            if(e.cap > 0 && level[v] < level[e.to]) {
                 int d = dfs(e.to, t, min(f, e.cap));
                 if(d > 0){
                     e.cap -= d;
@@ -63,7 +63,7 @@ struct dinic {
 
     int flow(int start, int to) {
         int ans = 0;
-        while(true){
+        while(true) {
             bfs(start);
             if(level[to] < 0) return ans;
             

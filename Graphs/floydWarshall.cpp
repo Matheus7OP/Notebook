@@ -9,7 +9,7 @@
 for(int k = 0; k < n; k++) {
 	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < n; j++) {
-			distancia[i][j] = min(distancia[i][j], distancia[i][k] + distancia[k][j]);
+			distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
 		}
 	}
 }

@@ -12,7 +12,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100100
+#define MAXN
 
 int elements[MAXN];
 vector<int> mstree[MAXN * 4];

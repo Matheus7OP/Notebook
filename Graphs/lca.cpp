@@ -7,10 +7,10 @@
 #include <bits/stdc++.h>
 using namespace std;
  
-#define MAXN 1010
+#define MAXN
  
-int parents[MAXN], ancestors[MAXN][50], visited[MAXN], nodes, levels[MAXN];
 vector< int > graph[MAXN];
+int parents[MAXN], ancestors[MAXN][50], visited[MAXN], nodes, levels[MAXN];
  
 void dfs(int node) {
 	int i, qtdFilhos = graph[node].size(), filho;
@@ -75,42 +75,4 @@ int lca(int u, int v) {
 	}
  
 	return parents[u];
-}
- 
-int main() {
-	int casos, qtdFilhos, i, j, filho, queries, n1, n2, tt = 1;
-	scanf("%d", &casos);
- 
-	while(casos--) {
-		scanf("%d", &nodes);
- 
-		for(i=1; i <= nodes; i++) {
-			scanf("%d", &qtdFilhos);
-			visited[i] = 0;
- 
-			for(j=0; j < qtdFilhos; j++) {
-				scanf("%d", &filho);
- 
-				graph[i].push_back(filho);
-				graph[filho].push_back(i);
-			}
-		}
- 
-		levels[1] = 0;
-		parents[1] = 1;
-		
-		dfs(1);
-		build();
- 
-		scanf("%d", &queries);
- 
-		printf("Case %d:\n", tt++);
- 
-		for(i=0; i < queries; i++) {
-			scanf("%d %d", &n1, &n2);
-			printf("%d\n", lca(n1, n2));
-		}
-	}
- 
-	return 0;
 }

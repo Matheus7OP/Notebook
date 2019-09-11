@@ -7,8 +7,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define mp(a, b) make_pair(a, b)
-typedef pair<int, int> P;
+#define mp make_pair
+typedef pair<int, int> pii;
 
 int qtdBuckets;
 
@@ -33,7 +33,7 @@ struct Container {
 
 	void addBucket() { buckets.push_back( Bucket() ); }
 	void addToBucket(int pos, int val) {
-		P info = getInfo(pos);
+		pii info = getInfo(pos);
 		int idxBucket = info.first, posInBucket = info.second;
 
 		// if a bucket is going to surpass size x, we split it
@@ -55,7 +55,7 @@ struct Container {
 		else buckets[idxBucket].insert(posInBucket, val);
 	}
 
-	P getInfo(int pos) {
+	pii getInfo(int pos) {
 		// returns in which bucket 'pos' is and in which position
 		// inside this bucket 'pos' is
 		// <bucket, posInBucket>
@@ -82,7 +82,7 @@ struct Container {
 	}
 
 	int query(int pos, int d) {
-		P info = getInfo(pos);
+		pii info = getInfo(pos);
 		int bckt = info.first, posInBucket, desired;
 		posInBucket = info.second;
 
@@ -105,19 +105,11 @@ struct Container {
 
 		return -1;
 	}
-
-	void debug() {
-		for(int i = 0; i < ((int) buckets.size()); i++) {
-			for(int j = 0; j < ((int) buckets[i].size()); j++) printf("%d ", buckets[i].get(j));
-			printf("]\n");
-		}
-	}
 } container;
 
 int main() {
 	int n, queries, op, h, d, pos, bckt, ans, idx;
 	scanf("%d", &n);
-
 
 	// starting with one bucket
 	container.addBucket();

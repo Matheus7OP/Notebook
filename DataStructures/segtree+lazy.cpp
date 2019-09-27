@@ -31,26 +31,27 @@ void build(int id, int l, int r) {
 	stree[id] = stree[id*2] + stree[id*2+1];
 }
 
-void rangeUpdate(int id, int l, int r, int a, int b, ll value) {
-	if(lazy[id] != 0) {
-		stree[id] += (r-l+1) * lazy[id];
+void doLazy(int id, int l, int r) {
+	stree[id] += (r-l+1) * lazy[id];
 
-		if(l != r) {
-			lazy[id*2] += lazy[id];
-			lazy[id*2+1] += lazy[id];
-		}
-		
-		lazy[id] = 0;
+	if(l != r) {
+		lazy[id*2] += lazy[id];
+		lazy[id*2+1] += lazy[id];
 	}
+	
+	lazy[id] = 0;
+}
 
+void update(int id, int l, int r, int a, int b, ll val) {
+	if(lazy[id] != 0) doLazy(id, l, r);
 	if(r < a or l > b) return;
 
 	if(l >= a and r <= b) {
-		stree[id] += (r-l+1) * value;
+		stree[id] += (r-l+1) * val;
 
 		if(l != r) {
-			lazy[id*2] += value;
-			lazy[id*2+1] += value;
+			lazy[id*2] += val;
+			lazy[id*2+1] += val;
 		}
 
 		return;
@@ -58,26 +59,15 @@ void rangeUpdate(int id, int l, int r, int a, int b, ll value) {
 
 	int m = (l+r) >> 1;
 
-	rangeUpdate(id*2, l, m, a, b, value);
-	rangeUpdate(id*2+1, m+1, r, a, b, value);
+	update(id*2, l, m, a, b, val);
+	update(id*2+1, m+1, r, a, b, val);
 
 	stree[id] = stree[id*2] + stree[id*2+1];
 }
 
 ll query(int id, int l, int r, int a, int b) {
 	if(r < a or l > b) return 0;
-
-	if(lazy[id] != 0) {
-		stree[id] += (r-l+1) * lazy[id];
-
-		if(l != r) {
-			lazy[id*2] += lazy[id];
-			lazy[id*2+1] += lazy[id];
-		}
-
-		lazy[id] = 0;
-	}
-
+	if(lazy[id] != 0) doLazy(id, l, r);
 	if(l >= a and r <= b) return stree[id];
 
 	int m = (l+r) >> 1;

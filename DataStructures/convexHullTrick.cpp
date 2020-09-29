@@ -5,7 +5,7 @@
  * Observe that negating the slope has the effect of mirroring lines about the Y-axis, so you can use one implementation for both.
  *
  * What if minimum is required instead of maximum?
- * Observe that negating both slope and Y-intersect has the effect of mirroring about the X-axis.
+ * Observe that negating both slope and Y-intersect has the effect of mirroring about the X-axis. Remember: (-1) * query(x) to obtain real value in this case
  */
 
 struct Line {
@@ -18,7 +18,8 @@ struct LineContainer : multiset<Line, less<>> {
 	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
 	static const ll inf = LLONG_MAX;
 	ll div(ll a, ll b) { // floored division
-		return a / b - ((a ^ b) < 0 && a % b); }
+		return a / b - ((a ^ b) < 0 && a % b); 
+	}
 	bool isect(iterator x, iterator y) {
 		if (y == end()) return x->p = inf, 0;
 		if (x->k == y->k) x->p = x->m > y->m ? inf : -inf;

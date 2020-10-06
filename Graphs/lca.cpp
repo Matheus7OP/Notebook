@@ -4,39 +4,31 @@
  * lca.cpp
 */
  
-#include <bits/stdc++.h>
-using namespace std;
- 
 #define MAXN
 #define MAXL
  
 vector<int> graph[MAXN];
-int parents[MAXN], ancestors[MAXL][MAXN], visited[MAXN], n, levels[MAXN];
+int parents[MAXN], ancestors[MAXL][MAXN], n, levels[MAXN];
  
-void dfs(int node) {
-	if( visited[node] == 1 ) return;
-	visited[node] = 1;
-
-	int neighbor;
-	for(int i = 0; i < (int) graph[node].size(); i++) {
-		neighbor = graph[node][i];
- 
-		if( visited[neighbor] == 0 ) {
-			parents[neighbor] = node;
-			levels[neighbor] = levels[node] + 1;
-			dfs(neighbor);
+void dfs(int node, int parent) {
+	for(int nb : graph[node]) {
+		if(nb != parent) {
+			parents[nb] = node;
+			levels[nb] = levels[node] + 1;
+			dfs(nb, node);
 		}
 	}
 }
  
-void build() {
+void build(int root) {
+	dfs(root, -1);
 	int lg;
 
 	for(lg = 1; (1 << lg) <= n; lg++);
 	lg--;
  
 	for(int j = 0; j <= lg; j++) {
-		for(int i = 0; i <= n; i++) ancestors[j][i] = -1;
+		for(int i = 1; i <= n; i++) ancestors[j][i] = -1;
 	}
  
 	for(int i = 1; i <= n; i++) ancestors[0][i] = parents[i];
